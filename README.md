@@ -101,7 +101,6 @@ pre-commit install
 ├── conftest.py                     # Shared pytest fixtures
 ├── requirements.txt                # Pinned base dependencies
 ├── .pre-commit-config.yaml         # Ruff linting on commit
-├── CONTRIBUTING.md                 # Guide for adding agents & tools
 └── .gitignore
 ```
 
@@ -182,8 +181,6 @@ python scripts/export_agents_to_orchestrate.py \
    ```bash
    python scripts/export_tools_to_orchestrate.py --env wxo_test
    ```
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines and the example tool in [tools/hello_world](tools/hello_world/).
 
 ---
 
