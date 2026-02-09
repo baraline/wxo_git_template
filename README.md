@@ -33,8 +33,8 @@ You get **versioning, collaboration, code review, automated testing, and determi
 
 ```bash
 # 1. Clone your copy of this template
-git clone https://github.com/YOUR_ORG/YOUR_REPO.git
-cd YOUR_REPO
+git clone https://github.com/baraline/wxo_git_template.git
+cd wxo_git_template
 
 # 2. Create and activate a virtual environment
 python -m venv .venv
