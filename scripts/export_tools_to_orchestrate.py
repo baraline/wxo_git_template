@@ -59,6 +59,7 @@ def import_tool(tool_dir: Path) -> bool:
 
     if requirements_file.exists():
         cmd.extend(["-r", str(requirements_file)])
+        logger.info("Using tool-specific requirements.txt for %s", tool_name)
     else:
         logger.error(
             "Skipping %s: requirements.txt is missing and is required.",

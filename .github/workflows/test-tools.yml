@@ -2,10 +2,10 @@ name: Test Tools
 
 on:
   push:
-    branches: [main, develop]
-    paths: ["tools/**", "conftest.py", "pyproject.toml"]
+    branches: [main]
+    paths: ["tools/**", "pyproject.toml"]
   pull_request:
-    paths: ["tools/**", "conftest.py", "pyproject.toml"]
+    paths: ["tools/**", "pyproject.toml"]
 
 jobs:
   test:

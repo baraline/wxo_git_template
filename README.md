@@ -45,12 +45,12 @@ source .venv/bin/activate
 
 # 3. Install dependencies
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install .
 
 # 4. (Optional) Install dev dependencies for linting & testing
 pip install -e ".[dev]"
 
-# 6. Register your Orchestrate environments
+# 5. Register your Orchestrate environments
 orchestrate env add \
   -n wxo_test \
   -u https://api.<region>.watson-orchestrate.cloud.ibm.com/instances/<test-instance-id> \
@@ -61,10 +61,10 @@ orchestrate env add \
   -u https://api.<region>.watson-orchestrate.cloud.ibm.com/instances/<prod-instance-id> \
   --type ibm_iam
 
-# 7. Activate an environment (you'll be prompted for your API key)
+# 6. Activate an environment (you'll be prompted for your API key)
 orchestrate env activate wxo_test
 
-# 8. Set up pre-commit hooks
+# 7. Set up pre-commit hooks
 pip install pre-commit
 pre-commit install
 ```
@@ -97,9 +97,7 @@ pre-commit install
 │   ├── export_agents_to_orchestrate.py
 │   ├── import_tools_from_orchestrate.py
 │   └── export_tools_to_orchestrate.py
-├── pyproject.toml                  # Project config (pytest, ruff)
-├── conftest.py                     # Shared pytest fixtures
-├── requirements.txt                # Pinned base dependencies
+├── pyproject.toml                  # Project config, dependencies, pytest, ruff
 ├── .pre-commit-config.yaml         # Ruff linting on commit
 └── .gitignore
 ```
@@ -107,7 +105,8 @@ pre-commit install
 ### Key conventions
 
 - **`agents/<name>/agents/native/<name>.yaml`** — mirrors the folder layout produced by `orchestrate agents export`, so import/export scripts work with zero configuration.
-- **`tools/<name>/`** — one directory per tool. The Python file has the **same name** as the directory. Each tool ships its own `requirements.txt`.
+- **`tools/<name>/`** — one directory per tool. The Python file has the **same name** as the directory. Each tool has its own `requirements.txt` for tool-specific dependencies.
+- **`pyproject.toml`** — defines project-wide dependencies (base SDK, pytest, ruff) and dev tooling configuration.
 - **`scripts/`** — automation helpers that wrap the ADK CLI. All support `--env`, `--api-key`, and `--verbose` flags.
 
 ---
@@ -175,7 +174,7 @@ python scripts/export_agents_to_orchestrate.py \
        └── test_my_new_tool.py
    ```
 2. Decorate your function with `@tool()` from `ibm_watsonx_orchestrate.agent_builder.tools`.
-3. List dependencies in `requirements.txt` (pin exact versions).
+3. List tool-specific dependencies in `requirements.txt` (pin exact versions).
 4. Write tests — they run automatically in CI.
 5. Push:
    ```bash
@@ -239,9 +238,3 @@ The ADK stores session state locally in:
 - `~/.cache/orchestrate/credentials.yaml` — cached JWT
 
 **Both are local to your machine and should never be shared or committed.**
-
----
-
-## License
-
-[MIT](LICENSE)

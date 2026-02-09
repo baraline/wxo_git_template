@@ -3,20 +3,18 @@ name = "wxo-git-managed"
 version = "0.1.0"
 description = "Git-managed agents and tools for IBM watsonx Orchestrate"
 readme = "README.md"
-license = "MIT"
-requires-python = ">=3.11"
+requires-python = ">=3.12,<3.13"
 dependencies = [
     "ibm-watsonx-orchestrate>=2.1.1",
 ]
 
 [project.optional-dependencies]
+# Add tool-specific optional dependencies here for local testing, e.g.:
 dev = [
     "pytest>=9.0",
     "ruff>=0.9",
     "pre-commit>=4.0",
 ]
-# Add tool-specific optional dependencies here, e.g.:
-# tools-my-tool = ["some-package>=1.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tools"]
