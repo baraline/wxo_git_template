@@ -2,7 +2,7 @@
 
 > **This is a GitHub template repository.** Click **"Use this template"** to create your own copy.
 
-A ready-to-use project structure for managing [IBM watsonx Orchestrate](https://www.ibm.com/products/watsonx-orchestrate) agents, tools, and knowledge bases as code — with version control, automated testing, and CI/CD deployments.
+A ready-to-use project structure for managing [IBM watsonx Orchestrate](https://www.ibm.com/products/watsonx-orchestrate) agents, tools, and knowledge bases as code — with version control, automated testing, and CI/CD deployments. This is linked to the blog post [Git-Driven Agent Management with IBM watsonx Orchestrate ADK](https://baraline.github.io/blog/2026/02/09/git-driven-agent-management-with-ibm-watsonx-orchestrate-adk/)
 
 ADK documentation: <https://developer.watson-orchestrate.ibm.com/>
 
