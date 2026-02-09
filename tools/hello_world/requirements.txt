@@ -1,0 +1,3 @@
+# No external dependencies required for this example tool.
+# Add pinned versions here when your tool needs them, e.g.:
+# requests==2.32.4

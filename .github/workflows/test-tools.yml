@@ -1,0 +1,37 @@
+name: Test Tools
+
+on:
+  push:
+    branches: [main, develop]
+    paths: ["tools/**", "conftest.py", "pyproject.toml"]
+  pull_request:
+    paths: ["tools/**", "conftest.py", "pyproject.toml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install base dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest ibm-watsonx-orchestrate
+
+      - name: Install tool dependencies
+        run: |
+          for req in tools/*/requirements.txt; do
+            [ -f "$req" ] && pip install -r "$req"
+          done
+
+      - name: Run tool tests
+        run: pytest tools/ -v --tb=short

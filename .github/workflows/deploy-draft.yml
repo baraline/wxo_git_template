@@ -1,0 +1,36 @@
+name: Deploy Agents and Tools (Draft)
+
+on:
+  push:
+    branches: [main]
+    paths: ["agents/**", "tools/**"]
+
+jobs:
+  deploy-draft:
+    runs-on: ubuntu-latest
+    environment: wxo-test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ADK
+        run: pip install --upgrade ibm-watsonx-orchestrate
+
+      - name: Configure test environment
+        env:
+          WXO_API_KEY: ${{ secrets.WXO_TEST_API_KEY }}
+        run: |
+          orchestrate env add -n wxo_test \
+            -u "${{ vars.WXO_TEST_URL }}" --type ibm_iam
+          orchestrate env activate wxo_test --api-key "$WXO_API_KEY"
+
+      - name: Deploy tools to test
+        run: python scripts/export_tools_to_orchestrate.py --verbose
+
+      - name: Deploy agents to test (draft)
+        run: python scripts/export_agents_to_orchestrate.py --verbose

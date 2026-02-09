@@ -1,0 +1,35 @@
+name: Deploy Agents and Tools (Live)
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy-live:
+    runs-on: ubuntu-latest
+    environment: wxo-production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ADK
+        run: pip install --upgrade ibm-watsonx-orchestrate
+
+      - name: Configure production environment
+        env:
+          WXO_API_KEY: ${{ secrets.WXO_PROD_API_KEY }}
+        run: |
+          orchestrate env add -n wxo_prod \
+            -u "${{ vars.WXO_PROD_URL }}" --type ibm_iam
+          orchestrate env activate wxo_prod --api-key "$WXO_API_KEY"
+
+      - name: Deploy tools to production
+        run: python scripts/export_tools_to_orchestrate.py --verbose
+
+      - name: Deploy agents to production (live)
+        run: python scripts/export_agents_to_orchestrate.py --deploy --verbose
